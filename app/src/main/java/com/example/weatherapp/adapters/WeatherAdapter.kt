@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.Model.WeatherModel
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ListItemBinding
 import com.squareup.picasso.Picasso

@@ -1,12 +1,12 @@
-package com.example.weatherapp
+package com.example.weatherapp.Model
 
-data class DayItem(
+data class WeatherModel(
     val city: String,
     val time: String,
     val condition: String,
-    val imageUrl: String,
     val currentTemp: String,
     val maxTemp: String,
     val minTemp: String,
+    val imageURL: String,
     val hours: String
 )
