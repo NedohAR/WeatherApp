@@ -46,6 +46,8 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("androidx.fragment:fragment-ktx:1.4.1")
     implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation ("androidx.core:core-ktx:1.10.0")
+    implementation ("androidx.appcompat:appcompat:1.5.1")
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)

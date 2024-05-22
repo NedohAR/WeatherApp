@@ -1,10 +1,14 @@
 package com.example.weatherapp.fragment
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +19,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
@@ -24,10 +29,10 @@ import com.example.weatherapp.Model.DialogManager
 import com.example.weatherapp.ViewModel.MainViewModel
 import com.example.weatherapp.adapters.VpAdapter
 import com.example.weatherapp.Model.WeatherModel
+import com.example.weatherapp.R
 import com.example.weatherapp.View.DaysFragment
 import com.example.weatherapp.View.HoursFragment
-//import com.example.weatherapp.Manifest
-//import com.example.weatherapp.R
+import com.example.weatherapp.View.MainActivity
 import com.example.weatherapp.databinding.FragmentMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -37,7 +42,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
 
-const val API_KEY = "d0a041a6af9242c0a1f121241240704"
+const val API_KEY = "1dfee6c99618418c8ce172530242105"
 
 class MainFragment : Fragment() {
     private lateinit var fLocationClient: FusedLocationProviderClient
@@ -91,6 +96,7 @@ class MainFragment : Fragment() {
                 }
             })
         }
+        createNotificationChannel()
     }
 
     private fun checkLocation(){
@@ -142,6 +148,8 @@ class MainFragment : Fragment() {
             tvCondition.text = it.condition
             tvMaxMin.text = if(it.currentTemp.isEmpty()) "" else maxMinTemp
             Picasso.get().load("https:" + it.imageURL).into(imWeather)
+
+            sendWeatherNotification(it)
         }
     }
 
@@ -153,9 +161,9 @@ class MainFragment : Fragment() {
     }
 
     private fun checkPermission(){
-        if(!isPermissionGranted(android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)){
             permissionListener()
-            pLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
@@ -180,6 +188,7 @@ class MainFragment : Fragment() {
         )
         queue.add(request)
     }
+
 
     private fun parseWeatherData(result: String) {
         val mainObject = JSONObject(result)
@@ -227,6 +236,35 @@ class MainFragment : Fragment() {
         )
         model.liveDataCurrent.value = item
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Weather Alerts"
+            val descriptionText = "Notifications for weather updates"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("WEATHER_CHANNEL_ID", name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendWeatherNotification(weather: WeatherModel) {
+        val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationId = 1
+
+        val builder = NotificationCompat.Builder(requireContext(), "WEATHER_CHANNEL_ID")
+            .setSmallIcon(R.drawable.ic_weather_notification)
+            .setContentTitle("The weather in ${weather.city}")
+            .setContentText("Current temperature: ${weather.currentTemp}ºC, Condition: ${weather.condition}")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        notificationManager.notify(notificationId, builder.build())
+    }
+
+
 
     companion object {
         @JvmStatic
