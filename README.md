@@ -43,10 +43,10 @@ dependencies {
 
 ## Uprawnienia
 
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+// <uses-permission android:name="android.permission.INTERNET"/>
+// <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+// <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+// <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 Te uprawnienia są niezbędne dla Twojej aplikacji, aby mogła korzystać z Internetu, uzyskiwać dostęp do lokalizacji oraz wysyłać powiadomienia. 
 
 ## Wykorzystanie
