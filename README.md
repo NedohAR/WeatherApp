@@ -22,7 +22,7 @@ WeatherApp to prosta aplikacja pogodowa, która umożliwia użytkownikom sprawdz
 
 ## Zależności
 
-dependencies {
+ ( dependencies {
     // Jetpack
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
@@ -39,14 +39,14 @@ dependencies {
     implementation "com.squareup.picasso:picasso:2.8"
 
     // Google Location Services
-    implementation "com.google.android.gms:play-services-location:21.2.0"
+    implementation "com.google.android.gms:play-services-location:21.2.0" )
 
 ## Uprawnienia
 
-// <uses-permission android:name="android.permission.INTERNET"/>
-// <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-// <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-// <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+ <uses-permission android:name="android.permission.INTERNET"/>
+ <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+ <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+ <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 Te uprawnienia są niezbędne dla Twojej aplikacji, aby mogła korzystać z Internetu, uzyskiwać dostęp do lokalizacji oraz wysyłać powiadomienia. 
 
 ## Wykorzystanie
